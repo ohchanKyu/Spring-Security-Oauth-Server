@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
+</head>
+<body>
+    <h1>Main</h1>
+    <div sec:authorize="isAuthenticated()">
+        <p>
+            Login User name : <span sec:authentication="principal.member.name"></span>
+        </p>
+    </div>
+    <div class="main-wrapper">
+        <a sec:authorize="isAnonymous()" aria-current="page" href="/public/login">로그인</a>
+        <a sec:authorize="isAuthenticated()" href="/auth/logout">로그아웃</a>
+        <a sec:authorize="isAuthenticated()" href="/api/user">User Api</a>
+        <a sec:authorize="hasAnyRole('MANAGER','ADMIN')" href="/api/manager">Manager Api</a>
+        <a sec:authorize="hasRole('ADMIN')" href="/api/admin">Admin Api</a>
+    </div>
+</body>
+</html>

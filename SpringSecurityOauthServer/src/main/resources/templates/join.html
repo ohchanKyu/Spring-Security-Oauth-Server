@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Join</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
+    <style>
+        button {
+            margin:10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>회원가입</h1>
+    <div class="join-wrapper">
+        <form action="/auth/join" method="post">
+            <label for="name">User Name</label> <br>
+            <input id="name" type="text" name="name" placeholder="User name"/> <br>
+
+            <label for="userId">User Id</label> <br>
+            <input id="userId" type="text" name="userId" placeholder="User Id"/> <br>
+
+            <label for="email">User Email</label> <br>
+            <input id="email" type="email" name="email" placeholder="User Email"> <br>
+
+            <label for="password">User Password </label> <br>
+            <input id="password" type="password" name="password" placeholder="User Password"> <br>
+            <button>회원가입</button> <br>
+            <div class="error-message-wrapper" th:if="${errorMessage != null}">
+                <p class="error-message" th:text="${errorMessage}"></p>
+            </div>
+            <a href="/public/login">로그인</a>
+        </form>
+    </div>
+</body>
+</html>
