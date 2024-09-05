@@ -1,10 +1,13 @@
 package com.example.SpringSecurityOauthServer.config.principal;
 
 import com.example.SpringSecurityOauthServer.config.oauth.GoogleUserInfo;
+import com.example.SpringSecurityOauthServer.config.oauth.KakaoUserInfo;
 import com.example.SpringSecurityOauthServer.config.oauth.NaverUserInfo;
 import com.example.SpringSecurityOauthServer.config.oauth.OauthUserInfo;
 import com.example.SpringSecurityOauthServer.entity.Member;
 import com.example.SpringSecurityOauthServer.service.MemberService;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -12,6 +15,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 import java.util.Map;
 
 @Service
@@ -30,7 +35,9 @@ public class PrincipalOauthDetailsService extends DefaultOAuth2UserService {
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")){
             oauth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")){
-            oauth2UserInfo = new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
+            oauth2UserInfo = new NaverUserInfo((Map<String, Object>) oAuth2User.getAttributes().get("response"));
+        }else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")){
+            oauth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         }
 
         assert oauth2UserInfo != null;
